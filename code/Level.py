@@ -75,9 +75,7 @@ class Level:
         #         print("item collision")
         for item in self.item_sprites:
             if item.rect.colliderect(self.player.hitbox_rect):
-                print("item collision")
                 self.score+=1
-                print("self score:",self.score)
                 item.kill()
                 # self.item_sprites.remove(item)
                 # self.all_sprites.remove(item)
