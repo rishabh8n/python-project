@@ -30,6 +30,8 @@ class Game:
     def update(self):
         self.dt = self.clock.tick(60) / 1000.0
         self.level.update(self.dt)
+        if self.level.player.health<=0:
+            self.running=False
 
     def draw(self):
         self.screen.fill((255, 255, 255))

@@ -6,27 +6,13 @@ class Sprite(pygame.sprite.Sprite):
         super().__init__(groups)
         self.image=surf
         self.rect=self.image.get_frect(topleft=pos)
-        # self.hitbox_rect=self.rect.inflate(hitbox_offset)
         self.old_rect=self.rect.copy()
     
     def update(self,dt):
         pass
 
-# class AnimatedSprite(Sprite):
-#     def __init__(self,pos,frames,groups,animation_speed=ANIMATION_SPEED):
-#         self.frames,self.frame_index=frames,0
-#         self.animation_speed=animation_speed
-#         super().__init__(pos,self.frames[self.frame_index],groups)
-    
-#     def animate(self,dt):
-#         self.frame_index+=self.animation_speed*dt
-#         self.image=self.frames[int(self.frame_index)%len(self.frames)]
-
-#     def update(self, dt):
-#         self.animate(dt)
-
 class PlayerSprite(Sprite):
-    def __init__(self, pos, surf, groups, state,face,particleSizeRange=(0,40),particleXOffeset=(5,5),particleYOffset=(5,15), rotation_speed=150):
+    def __init__(self, pos, surf, groups, state,face,particleSizeRange=(0,35),particleXOffeset=(5,0),particleYOffset=(0,15), rotation_speed=150):
         super().__init__(pos, surf, groups)
         self.original_image = surf
         self.state=state
@@ -95,9 +81,8 @@ class PlatformSprite(Sprite):
         self.rect=self.image.get_frect(topleft=pos)
 
         self.move_direction = 1
-        self.move_counter = random.randint(0, 40)
-        self.move_x = move_x # flag to move in x direction
-        self.move_y = move_y # flag to move in y direction
+        self.move_x = move_x # move speed in x direction
+        self.move_y = move_y # move speed in y direction
         self.collision_sprites=collision_sprites
         self.player=player
 
@@ -105,7 +90,6 @@ class PlatformSprite(Sprite):
     def update(self,dt):
         self.rect.x += self.move_direction * self.move_x*dt
         self.rect.y += self.move_direction * self.move_y*dt
-        self.move_counter += 1
         if self.player.hitbox_rect.right > self.rect.left and self.player.hitbox_rect.left<self.rect.right and self.player.dir.y==0:
             self.player.hitbox_rect.x+=self.move_direction * self.move_x*dt
         self.check_collision()

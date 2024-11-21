@@ -18,12 +18,6 @@ class Level:
         self.collision_sprites=pygame.sprite.Group()
         self.enemies=[]
         self.setup()
-        # for layer in self.tmx_data.visible_layers:
-        #     if isinstance(layer, pytmx.TiledTileLayer):
-        #         for x, y, gid in layer:
-        #             tile = self.tmx_data.get_tile_image_by_gid(gid)
-        #             if tile:
-        #                 self.map_image.blit(tile, (x * self.tmx_data.tilewidth, y * self.tmx_data.tileheight))
 
     def setup(self):
         for obstacle in self.tmx_data.get_layer_by_name("obstacles"):
@@ -31,7 +25,7 @@ class Level:
         
         for player in self.tmx_data.get_layer_by_name("player"):
             # frames=level_frames['player']
-            self.player=Player((player.x,player.y),self.all_sprites,self.collision_sprites,self.damage_sprites,player.image)
+            self.player=Player((player.x,player.y),self.all_sprites,self.collision_sprites,self.damage_sprites,player.image,self.obstacles)
         
         for player in self.tmx_data.get_layer_by_name("enemies"):
             # frames=level_frames['player']
@@ -67,7 +61,3 @@ class Level:
     def draw(self):
         self.screen.fill((255,255,255))
         self.all_sprites.draw(self.player.hitbox_rect.center)
-        self.player.draw()
-
-    # def get_map_size(self):
-    #     return self.map_rect.size
